@@ -418,4 +418,15 @@ for topic in topics:
     for level in topic['levels']:
         st.markdown(f'<div class="level-header" style="background: linear-gradient(135deg, {level["color"]}, {level["color"]}dd);">{level["level_name"]}</div>', unsafe_allow_html=True)
         for task in level['tasks']:
-            with st.expander(
+            with st.expander(f"📌 {task['title']}", expanded=False):
+                st.markdown(f"**Есеп шарты:**\n\n{task['condition']}")
+                btn_key = f"task_{task['id']}"
+                if btn_key not in st.session_state.results_state:
+                    st.session_state.results_state[btn_key] = False
+                if st.button(f"✨ Нәтижесін / Шығарылу жолын көрсету", key=f"btn_{task['id']}"):
+                    st.session_state.results_state[btn_key] = not st.session_state.results_state[btn_key]
+                if st.session_state.results_state[btn_key]:
+                    st.info(task['solution'])
+
+st.markdown("---")
+st.markdown("<p style='text-align: center; color: #94a3b8;'>© 2026 ЗЕРДЕVERSE платформасы | Авторы: Сұлтанова М. 🚀</p>", unsafe_allow_html=True)
